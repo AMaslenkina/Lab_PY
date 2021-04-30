@@ -6,10 +6,10 @@ import re
 
 site = 'https://www.imdb.com'
 
-resp = req.get(site + "/name/nm0331516/")
-soup = BeautifulSoup(resp.text, 'lxml')
+resp = req.get(site + "/name/nm0594503/")
+soup = BeautifulSoup(resp.text, 'html.parser')
 
-writer_id_re = re.compile("^actor-tt")
+writer_id_re = re.compile("^writer-tt")
 rating = 'ratingValue'
 
 films = {"year": [], "name": [], "rating": []}
@@ -19,7 +19,7 @@ for film_tag in films_tags:
     film_ref = film_tag.b.a['href']
     film_name = film_tag.b.a.string
     film_year = film_tag.span.string
-    film_soup = BeautifulSoup(req.get(site + film_ref).text, 'lxml')
+    film_soup = BeautifulSoup(req.get(site + film_ref).text, 'html.parser')
     film_rating = film_soup.find("span", {'itemprop': rating})
     print(film_rating)
     if film_rating:
